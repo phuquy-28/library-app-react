@@ -2,6 +2,7 @@ import { NavLink, Link } from "react-router-dom";
 import { useOktaAuth } from "@okta/okta-react";
 import { useState } from "react";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
+import { ManageLibraryPage } from "../ManageLibraryPage/ManageLibraryPage";
 
 export const Navbar = () => {
   const { oktaAuth, authState } = useOktaAuth();
@@ -42,9 +43,23 @@ export const Navbar = () => {
               </NavLink>
             </li>
             {authState.isAuthenticated && (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/shelf">
+                    Shelf
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/messages">
+                    Messages
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {authState?.accessToken?.claims.userType === "admin" && (
               <li className="nav-item">
-                <NavLink className="nav-link" to="/shelf">
-                  Shelf
+                <NavLink className="nav-link" to="/admin">
+                  Manage Library
                 </NavLink>
               </li>
             )}
